@@ -6,9 +6,16 @@
     <span>Guess That Song</span>
     <span class="spacer"></span>
 
-    <button mat-button>
+    <button mat-button (click)="login()" *ngIf="!isLoggedIn">
       <span style="display: flex; align-items: center;">Login
         <mat-icon style="margin-left: 5px">login</mat-icon>
+      </span>
+    </button>
+
+
+    <button mat-button (click)="isLoggedIn = !isLoggedIn" *ngIf="isLoggedIn">
+      <span style="display: flex; align-items: center;" >Welcome, {{userName}}!
+        <mat-icon style="margin-left: 5px">logout</mat-icon>
       </span>
     </button>
   </mat-toolbar>
@@ -17,7 +24,12 @@
     <mat-sidenav #sidenav mode="side" class="sidenav">
       <h1>Choose your game options:</h1>
     </mat-sidenav>
-  </mat-sidenav-container>
 
+    <div style="margin-top: 20px; margin-left:10px">
+      <h1 *ngIf="!isLoggedIn">You aren't logged in. Please login</h1>
+
+      <h1></h1>
+    </div>
+  </mat-sidenav-container>
   <mat-toolbar class="footer">SEIS 622 - 01 | Fall 2024 | Shafer, Torralba, Yang</mat-toolbar>
 </div>
