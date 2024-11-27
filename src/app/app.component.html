@@ -25,28 +25,19 @@
       <h1>Choose your game options:</h1>
       <hr style="margin-bottom: 10px;" />
 
-      <span class="game-options"> <!-- yer -->
-        <mat-label>Difficulty</mat-label><br /> <!-- yer -->
-        <mat-radio-group [(ngModel)]="diffMode" style="padding: 15px" [disabled]="isGameInProgress"> <!-- yer -->
-          <!-- <span *ngFor="let diffBool of difficultyBooleanArray" class="difficulty"> -->
+      <!-- !! YY -->
+      <span class="game-options">
+        <mat-label>Difficulty</mat-label><br />
+        <mat-radio-group [(ngModel)]="diffMode" style="padding: 15px" [disabled]="isGameInProgress">
           <br>
           <span *ngIf="difficultyBooleanArray[0]" class="difficulty-selected">Easy</span>
           <span *ngIf="difficultyBooleanArray[1]" class="difficulty-selected">Normal</span>
           <span *ngIf="difficultyBooleanArray[2]" class="difficulty-selected">Intermediate</span>
           <span *ngIf="difficultyBooleanArray[3]" class="difficulty-selected">Hard</span>
           <span *ngIf="difficultyBooleanArray[4]" class="difficulty-selected">Legendary</span>
-
-            <!-- <p *ngIf="diffBool" [(ngModel)] ="difficultyName" class="difficulty-selected">{{difficultyName}}</p>
-            </span> -->
-            <!-- <span class="difficulty" value="Normal">Normal</span>
-            <span class="difficulty" value="Hard">Hard</span>
-            <span class="difficulty" value="Legendary">Legendary</span> -->
-
-          <!-- <mat-radio-button value="easy">Easy</mat-radio-button> yer -->
-          <!-- <mat-radio-button value="hard">Hard</mat-radio-button> yer -->
-        </mat-radio-group> <!-- yer -->
-      </span> <!-- yer -->
-      <br /> <br /> <!-- yer -->
+        </mat-radio-group>
+      </span>
+      <br /> <br />
 
       <span class="game-options">
         <mat-label>Enable Search</mat-label><br />
@@ -72,6 +63,7 @@
         </mat-slider>
       </span>
       <br /> <br />
+      <!-- ^^ YY -->
 
       <span class="game-options">
         <mat-slider min="1" max="5" step="1" showTickMarks style="margin-bottom: 10px;">
@@ -142,9 +134,9 @@
                 <mat-label>Enter your guess...</mat-label>
                 <input matInput type="text" placeholder="Song name" [(ngModel)]="guess" />  Time:  {{guessTimer}}          </mat-form-field>
               <div *ngIf="isSearched" class="center-search"> > <!-- yer -->
-                <button class="button-search" *ngFor="let song of searchedSongs" (click)="selectSearchedSong(song.name)">{{song.name}}</button>
-                </div>
-              <button *ngIf="searchOption" mat-button class="center submit-btn" (click)="searchSong()">Search</button>
+                <button class="button-search" *ngFor="let song of searchedSongs" (click)="selectSearchedSong(song.name)">{{song.name}}</button> <!-- yer -->
+                </div> <!-- yer -->
+              <button *ngIf="searchOption" mat-button class="center submit-btn" (click)="searchSong()">Search</button><!-- yer -->
               <button mat-button class="center submit-btn" (click)="submitGuess()">Submit</button>
               <button mat-button class="center submit-btn" (click)="stopGame()">Stop</button> <!-- yer -->
             </div>

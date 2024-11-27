@@ -53,20 +53,17 @@ export class AppComponent {
   isGameOver: boolean;
 
   // !! section that is added by YY
-  isSearched: boolean = true;
-  searchedSongs: video[] = [];
-  difficultyStandard: number[] = [10,20,30,60,100]
-  difficultyNames: string[] = ['Easy','Normal','Intermtediate','Hard','Legendary']
-  difficultyBooleanArray: boolean[];
-  difficultyName: string;
-  
-  searchOption: boolean = true;
-  searchOptionValue:string;
-  diffMode: string;
-  setGuessTimer: number;
-  guessTimer: number; 
-  interval: any;
-  timeStarted: boolean = false;
+  isSearched: boolean = true; // bool to indicate something has been searched for ngIf in html
+  searchedSongs: video[] = []; // an array that is pushed with songs based on name match, and then displayed in html
+  difficultyStandard: number[] = [10,20,30,60,100] // an array parallel for difficultyNames
+  difficultyNames: string[] = ['Easy','Normal','Intermtediate','Hard','Legendary'] // an array parellel for difficultyStandard
+  difficultyBooleanArray: boolean[]; // an array will be checked to see which index has updated ot true
+  searchOption: boolean = true; // search option is initialized as enabled
+  searchOptionValue:string; // string value for switching search option on/off from radio-button
+  setGuessTimer: number; // number value stored to give guessTimer the set guess time
+  guessTimer: number;  // number value that will be decremented and referenced to be shown in html
+  interval: any; // an object that will be defined as an interval object
+  timeStarted: boolean = false; // a bool to indicate a game has started for decrementing guessTimer
   //  ^^ section that is added by YY
 
 
@@ -100,14 +97,12 @@ export class AppComponent {
     this.score = 0;
     this.currentIndex = 0;
     this.numberOfRounds = 5;
-    // this.secondsPerRound = 3;
-    this.difficultyBooleanArray = [false,false,false,false,false] 
-    this.searchOptionValue = 'on'; // YY
-    this.diffMode = 'easy'; // YY 
-    this.setGuessTimer =  30; // YY
-    this.secondsPerRound = 10; // YY
-    this.guessTimer = this.setGuessTimer; // YY
-    this.difficultyName = this.difficultyNames[this.calculateDifficulty()];
+    // this.secondsPerRound = 3; temporarily commenting this ans I am redefining it below for the difficulty selector
+    this.difficultyBooleanArray = [false,false,false,false,false] // initializing all to false
+    this.searchOptionValue = 'on'; // initializing that search option is enabled
+    this.setGuessTimer =  30; // initializing the guess time is 30 (Easy). an updated value is later retrieved with radiobutton in settings
+    this.secondsPerRound = 10; // initializing the song played per second is 10 (easy). an updated value is later retrieved with radiobutton in settings
+    this.guessTimer = this.setGuessTimer; // initaliazting the guess timer that will be decremented and displayed in html
     this.filterMode = 'decade';
     this.selectedDecade = 2000;
     this.selectedGenre = genre.AltRock;
@@ -202,7 +197,8 @@ export class AppComponent {
   }
 
   // !! section that is added by YY
-  startTimer() {
+  startTimer() { // function that is called at startGame and ansychronously decrements throughout the game.
+                 // only displayed when the song has finished playing. (currently 3 seconds short)
     console.log(this.guessTimer);
     this.interval = setInterval(() => {
       if(this.guessTimer > 0) {
@@ -215,7 +211,7 @@ export class AppComponent {
     },1000);
   }
 
-  searchSong() {
+  searchSong() { // searches for song from video service
     this.searchedSongs = [];
     console.log('searchsong : ' + this.guess)
     this.songList.forEach((forSongSearch: video, index) => {
@@ -225,18 +221,19 @@ export class AppComponent {
     this.isSearched = true;
   }
 
-  selectSearchedSong(name:string) {
+  selectSearchedSong(name:string) { // highlights the searched songs, to be copied in input textbox
     this.guess = name;
   }
 
-  stopGame() {
+  stopGame() { // stops the game from a stop button
     this.isRoundInProgress = true;
     this.isGameInProgress = false;
     this.currentIndex = 0;
     this.guess = '';
   }
 
-  searchOptionControl() {
+  searchOptionControl() { // when search option is enabled, updates the search option value to later reflect in html
+                          // currently does not work good
     if (this.searchOptionValue === 'on') {
       console.log('pressed search option enable on')
 
@@ -249,7 +246,8 @@ export class AppComponent {
     this.calculateDifficulty()
   }
 
-  calculateDifficulty() {
+  calculateDifficulty() { // calculates what the difficulty is based on:
+                          // search option, song played per second, guess time per second
     this.difficultyBooleanArray = [false,false,false,false,false]
     let totalPoints: number = 0;
     if (!this.searchOption) {
