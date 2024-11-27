@@ -28,15 +28,29 @@
       <span class="game-options"> <!-- yer -->
         <mat-label>Difficulty</mat-label><br /> <!-- yer -->
         <mat-radio-group [(ngModel)]="diffMode" style="padding: 15px" [disabled]="isGameInProgress"> <!-- yer -->
-          <mat-radio-button value="easy">Easy</mat-radio-button> <!-- yer -->
-          <mat-radio-button value="hard">Hard</mat-radio-button> <!-- yer -->
+          <!-- <span *ngFor="let diffBool of difficultyBooleanArray" class="difficulty"> -->
+          <br>
+          <span *ngIf="difficultyBooleanArray[0]" class="difficulty-selected">Easy</span>
+          <span *ngIf="difficultyBooleanArray[1]" class="difficulty-selected">Normal</span>
+          <span *ngIf="difficultyBooleanArray[2]" class="difficulty-selected">Intermediate</span>
+          <span *ngIf="difficultyBooleanArray[3]" class="difficulty-selected">Hard</span>
+          <span *ngIf="difficultyBooleanArray[4]" class="difficulty-selected">Legendary</span>
+
+            <!-- <p *ngIf="diffBool" [(ngModel)] ="difficultyName" class="difficulty-selected">{{difficultyName}}</p>
+            </span> -->
+            <!-- <span class="difficulty" value="Normal">Normal</span>
+            <span class="difficulty" value="Hard">Hard</span>
+            <span class="difficulty" value="Legendary">Legendary</span> -->
+
+          <!-- <mat-radio-button value="easy">Easy</mat-radio-button> yer -->
+          <!-- <mat-radio-button value="hard">Hard</mat-radio-button> yer -->
         </mat-radio-group> <!-- yer -->
       </span> <!-- yer -->
       <br /> <br /> <!-- yer -->
 
       <span class="game-options">
         <mat-label>Enable Search</mat-label><br />
-        <mat-radio-group [(ngModel)]="searchOptionValue" style="padding: 15px" [disabled]="isGameInProgress">
+        <mat-radio-group [(ngModel)]="searchOptionValue" (click)="searchOptionControl()" style="padding: 15px" [disabled]="isGameInProgress">
           <mat-radio-button value="on">On</mat-radio-button>
           <mat-radio-button value="off">Off</mat-radio-button>
         </mat-radio-group>
@@ -46,7 +60,7 @@
       <span class="game-options">
         <mat-slider min="3" max="10" step="1" showTickMarks style="margin-bottom: 10px;">
           <mat-label>Number of Seconds Music Played Per Round: {{secondsPerRound}}</mat-label>
-          <input matSliderThumb [(ngModel)]="secondsPerRound" [disabled]="isGameInProgress"/>
+          <input matSliderThumb [(ngModel)]="secondsPerRound" (click)="calculateDifficulty()" [disabled]="isGameInProgress"/>
         </mat-slider>
       </span>
       <br /> <br />
@@ -54,7 +68,7 @@
       <span class="game-options">
         <mat-slider min="10" max="30" step="1" showTickMarks style="margin-bottom: 10px;">
           <mat-label>Number of Seconds Guess Timer Per Round: {{setGuessTimer}}</mat-label>
-          <input matSliderThumb [(ngModel)]="setGuessTimer" [disabled]="isGameInProgress"/>
+          <input matSliderThumb [(ngModel)]="setGuessTimer" (click)="calculateDifficulty()" [disabled]="isGameInProgress"/>
         </mat-slider>
       </span>
       <br /> <br />

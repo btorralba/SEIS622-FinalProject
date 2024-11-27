@@ -55,6 +55,10 @@ export class AppComponent {
   // !! section that is added by YY
   isSearched: boolean = true;
   searchedSongs: video[] = [];
+  difficultyStandard: number[] = [10,20,30,60,100]
+  difficultyNames: string[] = ['Easy','Normal','Intermtediate','Hard','Legendary']
+  difficultyBooleanArray: boolean[];
+  difficultyName: string;
   
   searchOption: boolean = true;
   searchOptionValue:string;
@@ -96,12 +100,14 @@ export class AppComponent {
     this.score = 0;
     this.currentIndex = 0;
     this.numberOfRounds = 5;
-    // this.secondsPerRound = 3; 
+    // this.secondsPerRound = 3;
+    this.difficultyBooleanArray = [false,false,false,false,false] 
     this.searchOptionValue = 'on'; // YY
     this.diffMode = 'easy'; // YY 
     this.setGuessTimer =  30; // YY
     this.secondsPerRound = 10; // YY
     this.guessTimer = this.setGuessTimer; // YY
+    this.difficultyName = this.difficultyNames[this.calculateDifficulty()];
     this.filterMode = 'decade';
     this.selectedDecade = 2000;
     this.selectedGenre = genre.AltRock;
@@ -232,10 +238,63 @@ export class AppComponent {
 
   searchOptionControl() {
     if (this.searchOptionValue === 'on') {
+      console.log('pressed search option enable on')
+
       this.searchOption = true;
-    } else if (this.searchOptionValue === 'off') {
+    } else {// (this.searchOptionValue === 'off') {
+      console.log('pressed search option enable off')
       this.searchOption = false;
     }
+    console.log('pressed search option, now: ' + this.searchOption)
+    this.calculateDifficulty()
+  }
+
+  calculateDifficulty() {
+    this.difficultyBooleanArray = [false,false,false,false,false]
+    let totalPoints: number = 0;
+    if (!this.searchOption) {
+      totalPoints = totalPoints + 20;
+    }
+    console.log('total points search option: ' + totalPoints)
+    if (this.secondsPerRound == 3) {
+      totalPoints = totalPoints + 20;
+    } else if (this.secondsPerRound > 3 && this.secondsPerRound < 7) {
+      totalPoints = totalPoints + 15;
+    } else if (this.secondsPerRound > 6 && this.secondsPerRound < 10) {
+      totalPoints = totalPoints + 10;
+    } else if (this.secondsPerRound > 9) {
+      totalPoints = totalPoints + 5;
+    }
+    console.log('total points seconds per round: ' + totalPoints)
+
+    if (this.setGuessTimer == 10) {
+      totalPoints = totalPoints + 30;
+    } else if (this.setGuessTimer > 10 && this.setGuessTimer < 15) {
+      totalPoints = totalPoints + 20;
+    } else if (this.setGuessTimer > 14 && this.setGuessTimer < 20) {
+      totalPoints = totalPoints + 15;
+    } else if (this.setGuessTimer > 19 && this.setGuessTimer < 25) {
+      totalPoints = totalPoints + 10;
+    } else if (this.setGuessTimer > 24 && this.setGuessTimer < 30) {
+      totalPoints = totalPoints + 5;
+    } else if (this.setGuessTimer > 29) {
+      totalPoints = totalPoints + 0;
+    }
+    console.log('total points guess timer: ' + totalPoints)
+
+    let returnCounter: number = 0;
+    let previousNumber :number = 0;
+    this.difficultyStandard.forEach((difficultyNumber: number, index) => {
+      if (totalPoints > previousNumber && totalPoints <= difficultyNumber) {
+        returnCounter = index;
+        console.log('total points matched between current number: ' + difficultyNumber + ' previous number: ' + previousNumber)
+        this.difficultyBooleanArray[index] = true;
+      }
+      previousNumber = difficultyNumber;
+    })
+    console.log(returnCounter)
+    console.log(this.difficultyNames[returnCounter])
+    return returnCounter;
   }
 
   // ^^ section that is added by YY
@@ -278,4 +337,6 @@ export class AppComponent {
     }
     this.songList = this.songList.sort((a,b) => 0.5 - Math.random());
   }
+
+
 }
