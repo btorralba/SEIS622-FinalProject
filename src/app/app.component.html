@@ -25,6 +25,40 @@
       <h1>Choose your game options:</h1>
       <hr style="margin-bottom: 10px;" />
 
+      <span class="game-options"> <!-- yer -->
+        <mat-label>Difficulty</mat-label><br /> <!-- yer -->
+        <mat-radio-group [(ngModel)]="diffMode" style="padding: 15px" [disabled]="isGameInProgress"> <!-- yer -->
+          <mat-radio-button value="easy">Easy</mat-radio-button> <!-- yer -->
+          <mat-radio-button value="hard">Hard</mat-radio-button> <!-- yer -->
+        </mat-radio-group> <!-- yer -->
+      </span> <!-- yer -->
+      <br /> <br /> <!-- yer -->
+
+      <span class="game-options">
+        <mat-label>Enable Search</mat-label><br />
+        <mat-radio-group [(ngModel)]="searchOptionValue" style="padding: 15px" [disabled]="isGameInProgress">
+          <mat-radio-button value="on">On</mat-radio-button>
+          <mat-radio-button value="off">Off</mat-radio-button>
+        </mat-radio-group>
+      </span>
+      <br /> <br />
+
+      <span class="game-options">
+        <mat-slider min="3" max="10" step="1" showTickMarks style="margin-bottom: 10px;">
+          <mat-label>Number of Seconds Music Played Per Round: {{secondsPerRound}}</mat-label>
+          <input matSliderThumb [(ngModel)]="secondsPerRound" [disabled]="isGameInProgress"/>
+        </mat-slider>
+      </span>
+      <br /> <br />
+
+      <span class="game-options">
+        <mat-slider min="10" max="30" step="1" showTickMarks style="margin-bottom: 10px;">
+          <mat-label>Number of Seconds Guess Timer Per Round: {{setGuessTimer}}</mat-label>
+          <input matSliderThumb [(ngModel)]="setGuessTimer" [disabled]="isGameInProgress"/>
+        </mat-slider>
+      </span>
+      <br /> <br />
+
       <span class="game-options">
         <mat-slider min="1" max="5" step="1" showTickMarks style="margin-bottom: 10px;">
           <mat-label>Number of Rounds: {{numberOfRounds}}</mat-label>
@@ -33,13 +67,13 @@
       </span>
       <br /> <br />
 
-      <span class="game-options">
+      <!-- <span class="game-options">
         <mat-slider min="3" max="10" step="1" showTickMarks style="margin-bottom: 10px;">
           <mat-label>Number of Seconds Per Round: {{secondsPerRound}}</mat-label>
           <input matSliderThumb [(ngModel)]="secondsPerRound" [disabled]="isGameInProgress"/>
         </mat-slider>
       </span>
-      <br /> <br />
+      <br /> <br /> -->
 
       <span class="game-options">
         <mat-label>Song Mode</mat-label><br />
@@ -92,19 +126,17 @@
               <mat-form-field class="center"
                 style="margin-left: auto; margin-right: auto; margin-top: 20px; width: 500px">
                 <mat-label>Enter your guess...</mat-label>
-                <input matInput type="text" placeholder="Song name" [(ngModel)]="guess" />              </mat-form-field>
-              <!-- <app-song-input *ngIf="isSearched" class="center" [searchText]="guess" ></app-song-input> -->
-              <div *ngIf="isSearched" class="center-search">
-                <button class="button-search" *ngFor="let song of searchedSongs">{{song.name}}</button>
+                <input matInput type="text" placeholder="Song name" [(ngModel)]="guess" />  Time:  {{guessTimer}}          </mat-form-field>
+              <div *ngIf="isSearched" class="center-search"> > <!-- yer -->
+                <button class="button-search" *ngFor="let song of searchedSongs" (click)="selectSearchedSong(song.name)">{{song.name}}</button>
                 </div>
-              <button mat-button class="center submit-btn" (click)="searchSong()">Search</button>
+              <button *ngIf="searchOption" mat-button class="center submit-btn" (click)="searchSong()">Search</button>
               <button mat-button class="center submit-btn" (click)="submitGuess()">Submit</button>
+              <button mat-button class="center submit-btn" (click)="stopGame()">Stop</button> <!-- yer -->
             </div>
 
             <br />
             <p>Your current score: <b>{{score}}</b></p>
-            <!-- <app-song-input class="center" [searchText]="guess"></app-song-input> -->
-
           </div>
 
           <div *ngIf="isGameOver">
