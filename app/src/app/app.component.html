@@ -36,7 +36,8 @@
       <br /> <br />
       <span class="game-options">
         <mat-label>Enable Search</mat-label><br />
-        <mat-radio-group [(ngModel)]="searchOptionValue" (change)="searchOptionControl()" style="padding: 15px" [disabled]="isGameInProgress">
+        <mat-radio-group [(ngModel)]="searchOptionValue" (change)="searchOptionControl()" style="padding: 15px"
+          [disabled]="isGameInProgress">
           <mat-radio-button value="on">On</mat-radio-button>
           <mat-radio-button value="off">Off</mat-radio-button>
         </mat-radio-group>
@@ -45,14 +46,16 @@
       <span class="game-options">
         <mat-slider min="3" max="10" step="1" showTickMarks style="margin-bottom: 10px;">
           <mat-label>Number of Seconds Music Played Per Round: {{secondsPerRound}}</mat-label>
-          <input matSliderThumb [(ngModel)]="secondsPerRound" (click)="calculateDifficulty()" [disabled]="isGameInProgress"/>
+          <input matSliderThumb [(ngModel)]="secondsPerRound" (click)="calculateDifficulty()"
+            [disabled]="isGameInProgress" />
         </mat-slider>
       </span>
       <br /> <br />
       <span class="game-options">
         <mat-slider min="10" max="30" step="1" showTickMarks style="margin-bottom: 10px;">
           <mat-label>Number of Seconds Guess Timer Per Round: {{setGuessTimer}}</mat-label>
-          <input matSliderThumb [(ngModel)]="setGuessTimer" (click)="calculateDifficulty()" [disabled]="isGameInProgress"/>
+          <input matSliderThumb [(ngModel)]="setGuessTimer" (click)="calculateDifficulty()"
+            [disabled]="isGameInProgress" />
         </mat-slider>
       </span>
       <br /> <br />
@@ -60,7 +63,7 @@
       <span class="game-options">
         <mat-slider min="1" max="5" step="1" showTickMarks style="margin-bottom: 10px;">
           <mat-label>Number of Rounds: {{numberOfRounds}}</mat-label>
-          <input matSliderThumb [(ngModel)]="numberOfRounds" [disabled]="isGameInProgress"/>
+          <input matSliderThumb [(ngModel)]="numberOfRounds" [disabled]="isGameInProgress" />
         </mat-slider>
       </span>
       <br /> <br />
@@ -81,14 +84,16 @@
       <br /> <br />
       <span class="game-options">
         <mat-label>Decade</mat-label><br />
-        <mat-select [(ngModel)]="selectedDecade" style="width: 75%; padding-left: 20px" [disabled]="filterMode !== 'decade' || isGameInProgress">
+        <mat-select [(ngModel)]="selectedDecade" style="width: 75%; padding-left: 20px"
+          [disabled]="filterMode !== 'decade' || isGameInProgress">
           <mat-option *ngFor="let decade of decades" [value]="decade.value">{{decade.viewValue}}</mat-option>
         </mat-select>
       </span>
       <br /> <br />
       <span class="game-options">
         <mat-label>Genre</mat-label><br />
-        <mat-select [(ngModel)]="selectedGenre" style="width: 75%; padding-left: 20px" [disabled]="filterMode !== 'genre' || isGameInProgress">
+        <mat-select [(ngModel)]="selectedGenre" style="width: 75%; padding-left: 20px"
+          [disabled]="filterMode !== 'genre' || isGameInProgress">
           <mat-option *ngFor="let genre of genres" [value]="genre.value">{{genre.viewValue}}</mat-option>
         </mat-select>
       </span>
@@ -119,16 +124,20 @@
                 <input matInput type="text" placeholder="Song name" [(ngModel)]="guess" />
               </mat-form-field>
               <div *ngIf="isSearched" class="center-search" style="display: flex; max-width: 75%;"> > <!-- yer -->
-                <button mat-button class="button-search" *ngFor="let song of searchedSongs" (click)="selectSearchedSong(song.name)">{{song.name}}</button> <!-- yer -->
-                </div> <!-- yer -->
-              <button *ngIf="searchOption" mat-button class="center submit-btn" (click)="searchSong()">Search</button><!-- yer -->
+                <button mat-button class="button-search" *ngFor="let song of searchedSongs"
+                  (click)="selectSearchedSong(song.name)">{{song.name}}</button> <!-- yer -->
+              </div> <!-- yer -->
+              <button *ngIf="searchOption" mat-button class="center submit-btn"
+                (click)="searchSong()">Search</button><!-- yer -->
               <button mat-button class="center submit-btn" (click)="submitGuess()">Submit</button>
               <button mat-button class="center submit-btn" (click)="stopGame()">Stop</button> <!-- yer -->
             </div>
             <br />
-            <mat-progress-bar *ngIf="isRoundInProgress" mode="determinate" [value]="calculateSongTime()" class="center" style="max-width: 50%; margin: auto auto 10px auto"></mat-progress-bar>
-            <mat-progress-bar *ngIf="!isRoundInProgress && isGameInProgress" mode="determinate" [value]="calculateGuessTime()" class="center" 
-            style="max-width: 50%; margin: auto auto 10px auto"></mat-progress-bar>
+            <mat-progress-bar *ngIf="isRoundInProgress" mode="determinate" [value]="calculateSongTime()" class="center"
+              style="max-width: 50%; margin: auto auto 10px auto"></mat-progress-bar>
+            <mat-progress-bar *ngIf="!isRoundInProgress && isGameInProgress" mode="determinate"
+              [value]="calculateGuessTime()" class="center"
+              style="max-width: 50%; margin: auto auto 10px auto"></mat-progress-bar>
             <p class="center">Your current score:&nbsp; <b>{{score}}</b></p>
           </div>
           <div *ngIf="isGameOver">
@@ -166,23 +175,36 @@
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
-  <mat-sidenav #rightSidenav mode="side" position="end" opened class="about" *ngIf="isLoggedIn && isGameInProgress">
+
+  <mat-sidenav #rightSidenav mode="side" position="end" opened class="about" style="height:auto; min-height:0px;">
     <div style="padding: 16px;">
-      <h2>
-        <b>
-          <div *ngIf="filterMode === 'decade'">{{ getDecadeViewValue(selectedDecade) }}</div>
-          <div *ngIf="filterMode === 'genre'">{{ getGenreViewValue(selectedGenre) }}</div>
-        </b>
-        {{ filterMode | titlecase }}
-      </h2>
-      <p>In <b>{{ numberOfRounds }}</b> rounds you will listen to a song for
-        <b>{{ secondsPerRound }}</b> second(s). After you listen to the song, type your guess within
-        <b>{{guessTimer}}</b> second(s)!
-      </p>
-    <br>
-    <br>
-    <h3>About</h3>
-    <p>Guess That Song is a project for Web App Development by Logan Shafer, Brandon Torralba, and Yer Yang</p>
+      <div *ngIf="isLoggedIn">
+        <h1><span *ngIf="difficultyBooleanArray[0]" class="difficulty-selected">Easy</span>
+          <span *ngIf="difficultyBooleanArray[1]" class="difficulty-selected">Normal</span>
+          <span *ngIf="difficultyBooleanArray[2]" class="difficulty-selected">Intermediate</span>
+          <span *ngIf="difficultyBooleanArray[3]" class="difficulty-selected">Hard</span>
+          <span *ngIf="difficultyBooleanArray[4]" class="difficulty-selected">Legendary</span></h1>
+        <h2>
+        <hr>
+          <b>
+            <div *ngIf="filterMode === 'decade'">{{ getDecadeViewValue(selectedDecade) }}</div>
+            <div *ngIf="filterMode === 'genre'">{{ getGenreViewValue(selectedGenre) }}</div>
+          </b>
+          {{ filterMode | titlecase }}
+        </h2>
+        <p>In <b>{{ numberOfRounds }}</b> rounds you will listen to a song for
+          <b>{{ secondsPerRound }}</b> second(s). After you listen to the song, type your guess within
+          <b>{{guessTimer}}</b> seconds!
+        </p>
+        <p>You can change the rules of the game by clicking on the top left of the screen.</p>
+        <br>
+        <hr>
+        <br>
+      </div>
+      <h1>About</h1>
+      <p>Guess That Song is a project for Web App Development by Logan Shafer, Brandon Torralba, and Yer Yang</p>
+      <br>
     </div>
   </mat-sidenav>
+
   <mat-toolbar class="footer">SEIS 622 - 01 | Fall 2024 | Shafer, Torralba, Yang</mat-toolbar>
