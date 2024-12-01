@@ -126,6 +126,9 @@
               <button mat-button class="center submit-btn" (click)="stopGame()">Stop</button> <!-- yer -->
             </div>
             <br />
+            <mat-progress-bar *ngIf="isRoundInProgress" mode="determinate" [value]="calculateSongTime()" class="center" style="max-width: 50%; margin: auto auto 10px auto"></mat-progress-bar>
+            <mat-progress-bar *ngIf="!isRoundInProgress && isGameInProgress" mode="determinate" [value]="calculateGuessTime()" class="center" 
+            style="max-width: 50%; margin: auto auto 10px auto"></mat-progress-bar>
             <p class="center">Your current score:&nbsp; <b>{{score}}</b></p>
           </div>
           <div *ngIf="isGameOver">

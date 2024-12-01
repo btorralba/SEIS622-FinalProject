@@ -19,6 +19,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { genre } from '../assets/genre';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -36,7 +38,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatTableModule,
     MatSliderModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressBarModule
   ],
   providers: [AuthService],
   templateUrl: './app.component.html',
@@ -77,6 +80,8 @@ export class AppComponent {
   decades: any;
   selectedGenre: genre;
   selectedDecade: number;
+  currSongTimer: any;
+  currSongTime: number = 0;
   constructor(
     private readonly authService: AuthService,
     private readonly videoService: VideoService
@@ -145,11 +150,13 @@ export class AppComponent {
     this.isGameInProgress = true;
     this.isRoundInProgress = true;
     this.isGameOver = false;
+    this.guessTimer = this.setGuessTimer;
     this.filterSongs();
     this.searchOptionControl(); // YY 
     this.playSong(this.currentIndex);
     setTimeout(() => {
       this.isRoundInProgress = false;
+      this.startTimer();
     }, this.secondsPerRound * 1000);
   }
   playSong(index) {
@@ -157,6 +164,12 @@ export class AppComponent {
     this.albumCoverSrc = this.songList[index].albumCoverSrc;
     this.currentSong = this.songList[index];
     this.currentIndex += 1;
+    this.currSongTime = 0;
+    this.currSongTimer = setInterval(() => {
+      if (this.isRoundInProgress) {
+        this.currSongTime++;
+      }
+    }, 1000);
   }
   submitGuess() {
     let currSongName = this.currentSong.name;
@@ -169,6 +182,8 @@ export class AppComponent {
     if (this.guess.toLowerCase().trim() === currSongName.toLowerCase().trim()) {
       this.score += 1;
     }
+    clearInterval(this.interval);
+    clearInterval(this.currSongTimer);
     this.startNextRound();
   }
   startNextRound() {
@@ -181,6 +196,7 @@ export class AppComponent {
       this.playSong(this.currentIndex);
       setTimeout(() => {
         this.isRoundInProgress = false;
+        this.startTimer();
       }, this.secondsPerRound * 1000);
     } else {
       this.endGame();
@@ -304,6 +320,14 @@ export class AppComponent {
   }
   getDecadeViewValue(selectedDecade: number): string {
     return (this.decades.find((d) => d.value === selectedDecade)).viewValue;
+  }
+
+  calculateSongTime() {
+    return Math.round((this.currSongTime / this.secondsPerRound) * 100);
+  }
+
+  calculateGuessTime() {
+    return Math.round((this.guessTimer / this.setGuessTimer) * 100);
   }
 
 }
