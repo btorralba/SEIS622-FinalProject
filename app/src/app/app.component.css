@@ -53,12 +53,15 @@
     position: absolute;
     top: 33%; 
     right: 0; 
-    height: 50%; 
-    width: 250px; 
+    height: auto;
+    min-height: 0%;
+    max-height:50%;
+    width: 10%; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
     color: #f2f2f2;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
 }
+
 
 .notLoggedIn {
     position: absolute;
@@ -83,4 +86,4 @@
 
 body.mat-typography {
     background: linear-gradient(to right, #5fcb57, #4a9e42);
-  }
+}
