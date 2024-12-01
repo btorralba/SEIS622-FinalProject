@@ -4,7 +4,6 @@
     left: 0;
     right: 0;
 }
-
 .container {
     position: absolute;
     top: 60px;
@@ -12,47 +11,74 @@
     left: 0;
     right: 0;
 }
-
 .sidenav {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 500px;
 }
-
 .spacer {
     flex: 1 1 auto;
 }
-
 .footer {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
 }
-
 .center {
     display: flex;
     justify-content: center;
 }
-
 .submit-btn {
     background-color: green;
     margin: auto;
 }
-
 .game-options {
     margin-top: 10px;
     padding-left: 20px;
     font-size: 20px
 }
+.difficulty-selected {
+    margin-top: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 40px
+}
 
 .about {
-    position: absolute; /* Allow precise placement */
-    top: 33%; /* Start at one-third down the page */
-    right: 0; /* Stick to the right edge */
-    height: 34%; /* Occupy the middle third of the page */
-    width: 250px; /* Sidebar width */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    display: flex;
+    position: absolute;
+    top: 33%; 
+    right: 0; 
+    height: 50%; 
+    width: 250px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    color: #f2f2f2;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
 }
-  
+
+.notLoggedIn {
+    position: absolute;
+    top: 50%; /* Move halfway down */
+    left: 50%; /* Move halfway across */
+    transform: translate(-50%, -50%); /* Center the element exactly */
+    margin: 0;
+    font-size: 2rem;
+    text-align: center;
+    background-color: #5fcb57;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    display: inline-block;
+    color: #f2f2f2;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.score {
+    display:flex
+}
+
+body.mat-typography {
+    background: linear-gradient(to right, #5fcb57, #4a9e42);
+  }
