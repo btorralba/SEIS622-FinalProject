@@ -33,6 +33,8 @@
 .submit-btn {
     background-color: green;
     margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .game-options {
     margin-top: 10px;

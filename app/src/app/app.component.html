@@ -1,6 +1,6 @@
 <div>
   <mat-toolbar class="header">
-    <button mat-icon-button (click)="sidenav.toggle()">
+    <button mat-icon-button (click)="sidenav.toggle()" [disabled]="!isLoggedIn">
       <mat-icon>menu</mat-icon>
     </button>
     <span><img src="assets/img/logo.png" alt="Logo" style="width:48px;height:48px;"></span>
@@ -118,15 +118,15 @@
                 <mat-label>Enter your guess...</mat-label>
                 <input matInput type="text" placeholder="Song name" [(ngModel)]="guess" />
               </mat-form-field>
-              <div *ngIf="isSearched" class="center-search"> > <!-- yer -->
-                <button class="button-search" *ngFor="let song of searchedSongs" (click)="selectSearchedSong(song.name)">{{song.name}}</button> <!-- yer -->
+              <div *ngIf="isSearched" class="center-search" style="display: flex; max-width: 75%;"> > <!-- yer -->
+                <button mat-button class="button-search" *ngFor="let song of searchedSongs" (click)="selectSearchedSong(song.name)">{{song.name}}</button> <!-- yer -->
                 </div> <!-- yer -->
               <button *ngIf="searchOption" mat-button class="center submit-btn" (click)="searchSong()">Search</button><!-- yer -->
               <button mat-button class="center submit-btn" (click)="submitGuess()">Submit</button>
               <button mat-button class="center submit-btn" (click)="stopGame()">Stop</button> <!-- yer -->
             </div>
             <br />
-            <p class="center">Your current score: <b>{{score}}</b></p>
+            <p class="center">Your current score:&nbsp; <b>{{score}}</b></p>
           </div>
           <div *ngIf="isGameOver">
             <h1 class="center">Game Over!</h1>
@@ -163,7 +163,7 @@
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
-  <mat-sidenav #rightSidenav mode="side" position="end" opened class="about">
+  <mat-sidenav #rightSidenav mode="side" position="end" opened class="about" *ngIf="isLoggedIn && isGameInProgress">
     <div style="padding: 16px;">
       <h2>
         <b>
@@ -173,7 +173,8 @@
         {{ filterMode | titlecase }}
       </h2>
       <p>In <b>{{ numberOfRounds }}</b> rounds you will listen to a song for
-        <b>{{ secondsPerRound }}</b> second(s). After you listen to the song, type your guess!
+        <b>{{ secondsPerRound }}</b> second(s). After you listen to the song, type your guess within
+        <b>{{guessTimer}}</b> second(s)!
       </p>
     <br>
     <br>
