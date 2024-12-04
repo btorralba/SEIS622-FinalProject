@@ -98,7 +98,7 @@ export class AppComponent {
     this.searchOptionValue = 'on'; // initializing that search option is enabled
     this.setGuessTimer = 30; // initializing the guess time is 30 (Easy). an updated value is later retrieved with radiobutton in settings
     this.secondsPerRound = 10; // initializing the song played per second is 10 (easy). an updated value is later retrieved with radiobutton in settings
-    this.guessTimer = this.setGuessTimer; // initaliazting the guess timer that will be decremented and displayed in html
+    this.guessTimer = this.setGuessTimer; // initalizing the guess timer that will be decremented and displayed in html
     this.filterMode = 'decade';
     this.selectedDecade = 2000;
     this.selectedGenre = genre.AltRock;
@@ -184,6 +184,7 @@ export class AppComponent {
     }
     clearInterval(this.interval);
     clearInterval(this.currSongTimer);
+    this.timeStarted = false;
     this.startNextRound();
   }
   startNextRound() {
@@ -226,14 +227,23 @@ export class AppComponent {
   // !! section that is added by YY
   startTimer() { // function that is called at startGame and ansychronously decrements throughout the game.
     // only displayed when the song has finished playing. (currently 3 seconds short)
-    console.log(this.guessTimer);
+    this.timeStarted = true;
+    let submittedBoolean = true;
     this.interval = setInterval(() => {
-      if (this.guessTimer > 0) {
+      if (this.guessTimer > 0 && this.timeStarted) {
+        console.log(this.timeStarted);
         console.log(this.guessTimer);
         this.guessTimer--;
       } else {
-        console.log('time is done, current index: ' + this.currentIndex + ' out of ' + this.numberOfRounds + ' so far');
-        this.submitGuess();
+        if (this.timeStarted) {
+          console.log('time is done, current index: ' + this.currentIndex + ' out of ' + this.numberOfRounds + ' so far');
+          this.submitGuess();
+        } else {
+          console.log('submit button was pressed or game was stopped')
+          submittedBoolean = false;
+          clearInterval(this.interval)
+        }
+
       }
     }, 1000);
   }
@@ -250,6 +260,7 @@ export class AppComponent {
     this.guess = name;
   }
   stopGame() { // stops the game from a stop button
+    this.timeStarted = false; // yy
     this.isRoundInProgress = true;
     this.isGameInProgress = false;
     this.currentIndex = 0;

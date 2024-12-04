@@ -121,16 +121,16 @@
               <mat-form-field class="center"
                 style="margin-left: auto; margin-right: auto; margin-top: 20px; width: 500px">
                 <mat-label>Enter your guess...</mat-label>
-                <input matInput type="text" placeholder="Song name" [(ngModel)]="guess" />
+                <input matInput type="text" placeholder="Song name" [(ngModel)]="guess" />Time:  {{guessTimer}}
               </mat-form-field>
-              <div *ngIf="isSearched" class="center-search" style="display: flex; max-width: 75%;"> > <!-- yer -->
-                <button mat-button class="button-search" *ngFor="let song of searchedSongs"
-                  (click)="selectSearchedSong(song.name)">{{song.name}}</button> <!-- yer -->
-              </div> <!-- yer -->
               <button *ngIf="searchOption" mat-button class="center submit-btn"
                 (click)="searchSong()">Search</button><!-- yer -->
               <button mat-button class="center submit-btn" (click)="submitGuess()">Submit</button>
               <button mat-button class="center submit-btn" (click)="stopGame()">Stop</button> <!-- yer -->
+              <div *ngIf="isSearched" class="center searched-items"> <!-- yer -->
+                <button mat-button class="button-search" *ngFor="let song of searchedSongs"
+                  (click)="selectSearchedSong(song.name)">{{song.name}}</button> <!-- yer -->
+              </div> <!-- yer -->
             </div>
             <br />
             <mat-progress-bar *ngIf="isRoundInProgress" mode="determinate" [value]="calculateSongTime()" class="center"
@@ -194,7 +194,7 @@
         </h2>
         <p>In <b>{{ numberOfRounds }}</b> rounds you will listen to a song for
           <b>{{ secondsPerRound }}</b> second(s). After you listen to the song, type your guess within
-          <b>{{guessTimer}}</b> seconds!
+          <b>{{setGuessTimer}}</b> seconds!
         </p>
         <p>You can change the rules of the game by clicking on the top left of the screen.</p>
         <br>

@@ -87,3 +87,9 @@
 body.mat-typography {
     background: linear-gradient(to right, #5fcb57, #4a9e42);
 }
+
+.searched-items {
+    display: flex;
+    max-width:100%;
+    justify-content: center;
+}
