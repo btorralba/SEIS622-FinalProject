@@ -31,10 +31,15 @@
     justify-content: center;
 }
 .submit-btn {
+    width: 150px;
+    align-items: center;
+    justify-content: center;
     background-color: green;
     margin: auto;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 .game-options {
     margin-top: 10px;
@@ -86,4 +91,8 @@
 
 body.mat-typography {
     background: linear-gradient(to right, #5fcb57, #4a9e42);
+}
+
+.searched-items {
+    max-width:100%;
 }
